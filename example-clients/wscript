@@ -77,7 +77,8 @@ def build(bld):
             prog.use += ['RT', 'M']
         if bld.env['IS_SUN']:
             prog.use += ['M']
-
+        if bld.env['IS_WINDOWS']:
+            prog.source = [prog.source, '../windows/getopt1.c', '../windows/getopt.c']
         prog.target = example_program
 
     if bld.env['BUILD_EXAMPLE_CLIENT_TRANSPORT']:
