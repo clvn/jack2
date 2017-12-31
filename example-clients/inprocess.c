@@ -13,6 +13,10 @@
 #include <memory.h>
 #include <jack/jack.h>
 
+#ifdef _MSC_VER
+#define EXPORT __declspec(dllexport)
+#endif
+
 /**
  * For the sake of example, an instance of this struct is allocated in
  * jack_initialize(), passed to inprocess() as an argument, then freed
@@ -56,7 +60,7 @@ inprocess (jack_nframes_t nframes, void *arg)
  * @return 0 if successful; otherwise jack_finish() will be called and
  * the client terminated immediately.
  */
-int
+EXPORT int
 jack_initialize (jack_client_t *client, const char *load_init)
 {
 	port_pair_t *pp = malloc (sizeof (port_pair_t));
@@ -115,7 +119,7 @@ jack_initialize (jack_client_t *client, const char *load_init)
  *
  * @param arg the same parameter provided to inprocess().
  */
-void
+EXPORT void
 jack_finish (void *arg)
 {
 	if (arg)
