@@ -480,6 +480,9 @@ def configure(conf):
         conf.env.append_unique('CXXFLAGS', ['/EHsc', '/W3'])
         conf.env.append_unique('CFLAGS', '/W3')
         conf.env.append_unique('DEFINES', ['WIN32', '_WINSOCKAPI_', '_ALLOW_KEYWORD_MACROS', '_CRT_SECURE_NO_WARNINGS', 'NOMINMAX', '_USE_MATH_DEFINES', '__STDC__'])
+        if Options.options.debug:
+            conf.env.append_unique('DEFINES', ['_DEBUG'])
+
     else:
         conf.env.append_unique('CXXFLAGS', '-Wall')
         conf.env.append_unique('CFLAGS', '-Wall')
@@ -569,9 +572,10 @@ def configure(conf):
 
     if conf.env['BUILD_DEBUG']:
         if conf.env['IS_WINDOWS']:
-            #pdb would be better but don't know enough about waf
-            conf.env.append_unique('CXXFLAGS', '/Z7')
-            conf.env.append_unique('CFLAGS', '/Z7')
+            #conf.env.append_unique('CXXFLAGS', ['/Zi' ,'/FS'])
+            #conf.env.append_unique('CFLAGS', ['/Zi','/FS'])
+            conf.env.append_unique('CXXFLAGS', ['/Z7', '/MDd'])
+            conf.env.append_unique('CFLAGS', ['/Z7', '/MDd'])
             conf.env.append_unique('LINKFLAGS', '/DEBUG')
         else:
             conf.env.append_unique('CXXFLAGS', '-g')
